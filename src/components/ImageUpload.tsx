@@ -143,17 +143,7 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
               {isProcessing ? 'Extraction des informations du véhicule' : 'PNG, JPG, JPEG, WEBP, PDF • Glissez-déposez ou cliquez'}
             </p>
           </div>
-          {!isProcessing && (
-            <div className="flex items-center gap-2">
-              <Button type="button" variant="outline" size="sm" className="shadow-sm hover:shadow-md transition-shadow" onClick={() => inputRef.current?.click()}>
-                <Upload className="h-4 w-4 mr-2" />
-                Choisir un fichier
-              </Button>
-              <Button type="button" variant="ghost" size="sm" className="shadow-sm hover:shadow-md transition-shadow" onClick={() => cameraInputRef.current?.click()}>
-                📷 Prendre une photo
-              </Button>
-            </div>
-          )}
+          {/* The whole card is clickable: upload is triggered by clicking the area/text above. Buttons removed per request. */}
         </div>
       </div>
     </div>
