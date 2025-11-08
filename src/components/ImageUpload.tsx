@@ -15,12 +15,16 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFileChange = (file: File | null) => {
+  const handleFileChange = async (file: File | null) => {
     if (!file) return;
 
     // Accept images (all formats) and PDFs
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
-    const isValid = validTypes.includes(file.type) || file.type.startsWith('image/');
+    
+    // Pour iOS, le type MIME peut être différent
+    const isValid = validTypes.includes(file.type) || 
+                   file.type.startsWith('image/') || 
+                   file.name.toLowerCase().match(/\.(jpg|jpeg|png|webp|heic|heif|pdf)$/);
     
     if (!isValid) {
       toast({
@@ -31,12 +35,38 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result as string;
-      onImageUpload(result);
-    };
-    reader.readAsDataURL(file);
+    try {
+      // Vérifier si c'est une image HEIC/HEIF
+      if (file.type === 'image/heic' || file.type === 'image/heif' || 
+          file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+        // Convertir HEIC en JPEG
+        const response = await fetch(URL.createObjectURL(file));
+        const blob = await response.blob();
+        file = new File([blob], file.name.replace(/\.(heic|heif)$/i, '.jpg'), {
+          type: 'image/jpeg',
+        });
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        onImageUpload(result);
+      };
+      reader.onerror = () => {
+        toast({
+          title: "Erreur",
+          description: "Impossible de lire le fichier. Essayez un autre format d'image.",
+          variant: "destructive",
+        });
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Impossible de traiter l'image. Essayez un autre format.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -74,7 +104,8 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/png,image/jpeg,image/jpg,image/webp,image/heic,image/heif,application/pdf"
+        accept="image/*,application/pdf,.heic,.heif"
+        capture="environment"
         className="hidden"
         onChange={(e) => handleFileChange(e.currentTarget.files?.[0] || null)}
         disabled={isProcessing}
