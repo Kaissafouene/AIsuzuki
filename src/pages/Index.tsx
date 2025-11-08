@@ -229,7 +229,7 @@ const Index = () => {
         {vehicles.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center space-y-6 animate-in fade-in-50">
             <div className="text-center space-y-4 max-w-md">
-              <div className="w-20 h-20 mx-auto">
+              <div className="w-28 h-28 mx-auto">
                 <img 
                   src="/logosuz.png" 
                   alt="Suzuki Logo" 
@@ -240,7 +240,7 @@ const Index = () => {
                 Assistant Suzuki Pièces
               </h2>
               <p className="text-muted-foreground">
-                Téléverse une ou plusieurs cartes grises Suzuki Celerio ou S-Presso pour commencer
+                Bonjour merci de télécharger  votre carte grise Suzuki Celerio ou S-Presso pour commencer
               </p>
             </div>
             <ImageUpload 

@@ -137,7 +137,7 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
           )}
           <div className="space-y-2">
             <p className="text-sm font-semibold">
-              {isProcessing ? 'Analyse en cours...' : 'Téléversez une carte grise'}
+              {isProcessing ? 'Analyse en cours...' : 'téléchargez  votre carte grise'}
             </p>
             <p className="text-xs text-muted-foreground">
               {isProcessing ? 'Extraction des informations du véhicule' : 'PNG, JPG, JPEG, WEBP, PDF • Glissez-déposez ou cliquez'}
