@@ -107,7 +107,7 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
         ref={inputRef}
         type="file"
         accept="image/*,application/pdf,.heic,.heif"
-        className="hidden"
+        className="sr-only"
         onChange={(e) => handleFileChange(e.currentTarget.files?.[0] || null)}
         disabled={isProcessing}
       />
@@ -117,7 +117,7 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
         type="file"
         accept="image/*,.heic,.heif"
         capture="environment"
-        className="hidden"
+        className="sr-only"
         onChange={(e) => handleFileChange(e.currentTarget.files?.[0] || null)}
         disabled={isProcessing}
       />
