@@ -14,6 +14,7 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = async (file: File | null) => {
     if (!file) return;
@@ -100,11 +101,21 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
       
-      {/* Hidden input triggered programmatically for reliability across browsers */}
+      {/* Hidden inputs triggered programmatically for reliability across browsers */}
+      {/* Primary input: opens file picker (allows selecting existing photos on iOS) */}
       <input
         ref={inputRef}
         type="file"
         accept="image/*,application/pdf,.heic,.heif"
+        className="hidden"
+        onChange={(e) => handleFileChange(e.currentTarget.files?.[0] || null)}
+        disabled={isProcessing}
+      />
+      {/* Secondary input: camera-only (forces camera on some mobile browsers) */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*,.heic,.heif"
         capture="environment"
         className="hidden"
         onChange={(e) => handleFileChange(e.currentTarget.files?.[0] || null)}
@@ -133,10 +144,15 @@ export function ImageUpload({ onImageUpload, isProcessing }: ImageUploadProps) {
             </p>
           </div>
           {!isProcessing && (
-            <Button type="button" variant="outline" size="sm" className="shadow-sm hover:shadow-md transition-shadow" onClick={() => inputRef.current?.click()}>
-              <Upload className="h-4 w-4 mr-2" />
-              Choisir un fichier
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button type="button" variant="outline" size="sm" className="shadow-sm hover:shadow-md transition-shadow" onClick={() => inputRef.current?.click()}>
+                <Upload className="h-4 w-4 mr-2" />
+                Choisir un fichier
+              </Button>
+              <Button type="button" variant="ghost" size="sm" className="shadow-sm hover:shadow-md transition-shadow" onClick={() => cameraInputRef.current?.click()}>
+                📷 Prendre une photo
+              </Button>
+            </div>
           )}
         </div>
       </div>
