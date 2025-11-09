@@ -11,7 +11,7 @@ export function Header({ vehicleCount }: HeaderProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="h-20 w-20 relative">
+            <div className="h-30 w-30 relative">
               <img 
                 src="/logosuz.png" 
                 alt="Suzuki Logo" 

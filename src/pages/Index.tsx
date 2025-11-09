@@ -240,7 +240,7 @@ const Index = () => {
                 Assistant Suzuki Pièces
               </h2>
               <p className="text-muted-foreground">
-                Bonjour merci de télécharger  votre carte grise Suzuki Celerio ou S-Presso pour commencer
+                Bonjour merci de télécharger  votre carte grise Suzuki
               </p>
             </div>
             <ImageUpload 
@@ -310,7 +310,7 @@ const Index = () => {
               </Button>
             </div>
             <p className="text-xs text-center text-muted-foreground">
-              CarPro • Expert en pièces Suzuki • Celerio & S-Presso
+              CarPro • Expert en pièces Suzuki
             </p>
           </div>
         </>
