@@ -237,7 +237,7 @@ const Index = () => {
                 />
               </div>
               <h2 className="text-2xl font-bold text-foreground">
-                Assistant Suzuki Pièces
+                Suzuki AI Assistant
               </h2>
               <p className="text-muted-foreground">
                 Bonjour merci de télécharger  votre carte grise Suzuki
